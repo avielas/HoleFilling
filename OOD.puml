@@ -14,7 +14,6 @@ class Image{
 class HoledImage extends Image{
     - String maskPath
     - RgbToGrayscaleFunc rgbToGrayscaleFunc
-    - WeightFunc weightFunc
     - Hole hole
     + HoledImage(String imagePath, String maskPath, int z, float e, int cType, RgbToGrayscaleFunc Rgb2GrayFunc, WeightFunc wFunc)
     - void carveOutTheHole()
@@ -59,10 +58,18 @@ class MathCalculator{
     + {static} float euclideanDistance(Pixel p1, Pixel p2)
 }
 
-'Composition
-'ParkingLot "1" *-- "many" Level : contains >
+class Consts{
+    + {static} final double PIXEL_INTENSITY_VALUE
+    + {static} final double HOLE_VALUE
+}
 
 'Aggregation
-'ParkingLot "1" o-- "1" Vehicle : aggregation >
+Image "1" o-- "many" Pixel : aggregation >
+HoledImage "1" o-- "1" Hole : aggregation >
+
+
+'Composition
+HoledImage "1" *-- "1" RgbToGrayscaleFunc : composition >
+Hole "1" *-- "1" WeightFunc : composition >
 
 @enduml
