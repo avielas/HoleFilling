@@ -1,0 +1,68 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Image{
+    # BufferedImage bufferedImage
+    # Pixel[][] greyscalePixels
+    # String imagePath
+    + Image(String imagePath)
+    - void loadImageToBuffer()
+    + void save(String pathToSave)
+    + void bufferedImageToGrayscalePixels(RgbToGrayscaleFunc rgbToGrayscaleFunc)
+}
+
+class HoledImage extends Image{
+    - String maskPath
+    - RgbToGrayscaleFunc rgbToGrayscaleFunc
+    - WeightFunc weightFunc
+    - Hole hole
+    + HoledImage(String imagePath, String maskPath, int z, float e, int cType, RgbToGrayscaleFunc Rgb2GrayFunc, WeightFunc wFunc)
+    - void carveOutTheHole()
+    - void findHole()
+    - void findBoundary()
+}
+
+class Hole{
+    - Set<Pixel> hole
+    - Set<Pixel> boundary
+    - WeightFunc weightFunc
+    - int connectedType
+    + Hole(int z, float e, int cType)
+    + boolean isHole(Pixel p)
+}
+
+interface WeightFunc{
+    + float weight(Pixel p1, Pixel p2)
+}
+
+interface RgbToGrayscaleFunc{
+    + float rgbToGrayscale(Color c)
+}
+
+class Pixel{
+    - int x
+    - int y
+    - float val
+    + Pixel(int y, int x, int val)
+    + int getY()
+    + int getX()
+    + float getVal()
+    + void setVal(float val)
+}
+
+class HoleFillingCalculator{
+    + {static} void fillHole(HoledImage image)
+    - {static} float calcColor(Pixel h, Set<Pixel> B, WeightFunc w)
+}
+
+class MathCalculator{
+    + {static} float euclideanDistance(Pixel p1, Pixel p2)
+}
+
+'Composition
+'ParkingLot "1" *-- "many" Level : contains >
+
+'Aggregation
+'ParkingLot "1" o-- "1" Vehicle : aggregation >
+
+@enduml
