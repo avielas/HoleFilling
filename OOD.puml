@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Pixel{
+    - int x
+    - int y
+    - float val
+    + Pixel(int y, int x, int val)
+    + int getY()
+    + int getX()
+    + float getVal()
+    + void setVal(float val)
+}
+
+class ImageProcessing{
+    - {static} float rgbToGreyscale(Color c)
+    - {static} boolean isHole(Point p)
+    + {static} Pixel applyMaskToImage(String pathToImage, String pathToMask)
+    + {static} Set<Pixel> findHole(Pixel[][] pixels)
+    + {static} Set<Pixel> findBoundary(Pixel[][] pixels, Set<Pixel> H, int cType)
+}
+
+class Image{
+    # Pixel[][] pixels
+    # Set<Pixel> hole
+    # Set<Pixel> boundary
+    # WeightFunc weightFunc
+    # int connectedType
+    + Image(String imagePath, String maskPath, int z, float e, int connectedType)
+    + void save(String imagePath)
+    + setWeightFunc(WeightFunc weightFunc)
+}
+
+interface WeightFunction{
+    + float weight(Pixel p1, Pixel p2)
+}
+
+class HoleFilling{
+    + {static} void fillHole(Image image)
+    + {static} float calcColor(Pixel h, Set<Pixel> B, WeightFunction w)
+    + {static} float euclideanDist(Pixel p1, Pixel p2)
+}
+
+
+'Composition
+'ParkingLot "1" *-- "many" Level : contains >
+
+'Aggregation
+'ParkingLot "1" o-- "1" Vehicle : aggregation >
+
+@enduml
