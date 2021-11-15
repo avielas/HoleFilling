@@ -49,9 +49,14 @@ class Pixel{
     + void setVal(float val)
 }
 
-class HoleFillingCalculator{
+class HoleFillingCalculator implements IHoleFillingCalculator{
     + {static} void fillHole(HoledImage image)
     - {static} float calcColor(Pixel h, Set<Pixel> B, WeightFunc w)
+}
+
+interface IHoleFillingCalculator{
+    + {static} void fillHole(HoledImage image)
+    + {static} float calcColor(Pixel h, Set<Pixel> B, WeightFunc w)
 }
 
 class MathCalculator{
