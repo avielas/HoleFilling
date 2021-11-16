@@ -1,4 +1,6 @@
-
+/**
+ *
+ */
 public class MathCalculator {
     public static float euclideanDist(Pixel p1, Pixel p2) {
         float x = p1.getX() - p2.getX();

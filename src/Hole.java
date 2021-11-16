@@ -7,6 +7,11 @@ public class Hole {
     private IWeightFunc weightFunc;
     private int connectedType;
 
+    /**
+     *
+     * @param cType
+     * @param weightFunc
+     */
     public Hole(int cType, IWeightFunc weightFunc){
         this.connectedType = cType;
         pixels = new HashSet();

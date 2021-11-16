@@ -16,6 +16,11 @@ public class Main {
                 throw new InvalidPixelConnectivity();
             }
 
+            if(args.length != 5){
+                System.out.println("Missing arguments (should be 5)\nUsage: [image path] [mask path] [z] [e] [pixel connectivity: 4/8]");
+                System.exit(1);
+            }
+
             // TODO - to understand this interface implementation syntax
             IRgbToGrayscaleFunc Rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
             IWeightFunc weightFunc = (Pixel u, Pixel v) -> (float) (1 / (Math.pow(MathCalculator.euclideanDist(u, v), z) + e));
@@ -24,8 +29,17 @@ public class Main {
             HoleFillingCalculator.fillHole(holedImage);
             holedImage.save(imagePath);
         }
+        catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(e.fillInStackTrace());
+            System.exit(1);
+        }
         catch (InvalidPixelConnectivity e) {
             System.out.println("Invalid connectivity type");
+            System.exit(1);
+        }
+        catch(NumberFormatException e) {
+            // for catch exception if parseFloat/parseFloat failed
+            System.out.println(e.fillInStackTrace());
             System.exit(1);
         }
         catch (IOException e) {
@@ -33,7 +47,6 @@ public class Main {
             System.exit(1);
         }
     }
-
 }
 
 class InvalidPixelConnectivity extends Exception { }

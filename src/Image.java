@@ -10,6 +10,11 @@ public class Image {
     protected String imagePath;
     protected BufferedImage bufferedImage;
     protected Pixel[][] grayscalePixels;
+
+    /**
+     *
+     * @param imagePath
+     */
     public Image(String imagePath){
         this.imagePath = imagePath;
         loadImageToBuffer();
@@ -36,6 +41,10 @@ public class Image {
         }
     }
 
+    /**
+     *
+     * @param rgbToGrayscaleFunc
+     **/
     public void bufferedImageToGrayscalePixels(IRgbToGrayscaleFunc rgbToGrayscaleFunc){
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
@@ -50,8 +59,14 @@ public class Image {
         }
     }
 
+    /**
+     *
+     * @param pathToSave
+     * @throws IOException
+     **/
     // TODO - to change this function !!
     public void save(String pathToSave) throws IOException {
+
         // extracts PATH+name and format
         Pattern p = Pattern.compile("(.*)\\.(.*)");
         Matcher m = p.matcher(pathToSave);

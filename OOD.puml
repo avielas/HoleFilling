@@ -85,6 +85,7 @@ HoledImage "1" o-- "1" Hole : aggregation >
 
 'Composition
 HoledImage "1" *-- "1" IRgbToGrayscaleFunc : composition >
+HoledImage "1" *-- "1" IWeightFunc : composition >
 Hole "1" *-- "1" IWeightFunc : composition >
 
 @enduml

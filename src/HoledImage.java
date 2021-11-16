@@ -9,6 +9,14 @@ public class HoledImage extends Image{
     private IRgbToGrayscaleFunc rgbToGrayscaleFunc;
     private String maskPath;
 
+    /**
+     *
+     * @param imagePath
+     * @param maskPath
+     * @param cType
+     * @param rgb2GrayFunc
+     * @param weightFunc
+     */
     public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc, IWeightFunc weightFunc) {
         super(imagePath);
         rgbToGrayscaleFunc = rgb2GrayFunc;
@@ -23,6 +31,9 @@ public class HoledImage extends Image{
         return hole;
     }
 
+    /**
+     *
+     */
     private void carveOutTheHole(){
         // TODO to throw exception if image and mask are from different width height
         try {
@@ -61,6 +72,9 @@ public class HoledImage extends Image{
         }
     }
 
+    /**
+     *
+     */
     // TODO - to understand the algorithm here
     private void findBoundary(){
         for (Pixel p : hole.getPixels()) {
