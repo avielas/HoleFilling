@@ -3,8 +3,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Image {
     protected String imagePath;
@@ -64,27 +64,32 @@ public class Image {
      * @param pathToSave
      * @throws IOException
      **/
-    // TODO - to change this function !!
-    public void save(String pathToSave) throws IOException {
+    public void save(String pathToSave) throws IOException, FailedToExtractFileFormat {
+        Path path = Paths.get(pathToSave);
+        String fileName = path.getFileName().toString();
+        String directory = path.getParent().toString();
+        String format;
+        int idx = fileName.lastIndexOf('.');
+        if (idx > 0) {
+            format = fileName.substring(idx+1);
+            fileName = fileName.substring(0, idx);
+        }
+        else{
+            throw new FailedToExtractFileFormat();
+        }
 
-        // extracts PATH+name and format
-        Pattern p = Pattern.compile("(.*)\\.(.*)");
-        Matcher m = p.matcher(pathToSave);
-        m.find();
-        String path = m.group(1);
-        String format = m.group(2);
-
-        BufferedImage filledImage = new BufferedImage(this.grayscalePixels[0].length, this.grayscalePixels.length, BufferedImage.TYPE_INT_RGB);
-        for (int i = 0; i < this.grayscalePixels.length; i++) {
-            for (int j = 0; j < this.grayscalePixels[0].length; j++) {
-                // iterates all pixels and creates the related color value
-                float holePixelColor = this.grayscalePixels[i][j].getVal();
+        BufferedImage filledImage = new BufferedImage(grayscalePixels[0].length, grayscalePixels.length, BufferedImage.TYPE_INT_RGB);
+        for (int i = 0; i < grayscalePixels.length; i++) {
+            for (int j = 0; j < grayscalePixels[0].length; j++) {
+                float holePixelColor = grayscalePixels[i][j].getVal();
                 Color c = new Color(holePixelColor, holePixelColor, holePixelColor);
                 filledImage.setRGB(j, i, c.getRGB());
             }
         }
-        File output = new File( path + "_FILLED." + format);
+        File output = new File( directory + "\\" + fileName + "_FILLED_HOLE." + format);
         ImageIO.write(filledImage, format, output);
-        System.out.println("Saved image in source directory.");
+        System.out.println("Saved image in the source directory.");
     }
 }
+
+class FailedToExtractFileFormat extends Exception { }

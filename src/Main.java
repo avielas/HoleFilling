@@ -20,7 +20,6 @@ public class Main {
                 System.exit(1);
             }
 
-            // TODO - to understand this interface implementation syntax
             IRgbToGrayscaleFunc Rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
             IWeightFunc weightFunc = (Pixel u, Pixel v) -> (float) (1 / (Math.pow(MathCalculator.euclideanDist(u, v), z) + e));
 
@@ -41,7 +40,14 @@ public class Main {
             System.out.println(e.fillInStackTrace());
             System.exit(1);
         }
+        catch (ImageAndMaskAreWithDifferentSize e){
+            System.out.println(e.fillInStackTrace());
+            System.exit(1);
+        }
         catch (IOException e) {
+            System.out.println(e.fillInStackTrace());
+            System.exit(1);
+        } catch (FailedToExtractFileFormat e) {
             System.out.println(e.fillInStackTrace());
             System.exit(1);
         }

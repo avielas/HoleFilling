@@ -17,7 +17,7 @@ public class HoledImage extends Image{
      * @param rgb2GrayFunc
      * @param weightFunc
      */
-    public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc, IWeightFunc weightFunc) {
+    public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc, IWeightFunc weightFunc) throws ImageAndMaskAreWithDifferentSize {
         super(imagePath);
         rgbToGrayscaleFunc = rgb2GrayFunc;
         hole = new Hole(cType, weightFunc);
@@ -35,13 +35,15 @@ public class HoledImage extends Image{
      *
      */
     private void carveOutTheHole(){
-        // TODO to throw exception if image and mask are with different width, height
         try {
             BufferedImage maskBuffer = ImageIO.read(new File(maskPath));
             int width = maskBuffer.getWidth();
             int height = maskBuffer.getHeight();
-            grayscalePixels = new Pixel[height][width];
 
+            if(bufferedImage.getWidth() != width || bufferedImage.getHeight() != height)
+                throw new ImageAndMaskAreWithDifferentSize();
+
+            grayscalePixels = new Pixel[height][width];
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     float value;
@@ -56,7 +58,7 @@ public class HoledImage extends Image{
                     grayscalePixels[i][j] = new Pixel(i, j, value);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | ImageAndMaskAreWithDifferentSize e) {
             System.out.println(e.fillInStackTrace());
             System.exit(1);
         }
@@ -75,7 +77,6 @@ public class HoledImage extends Image{
     /**
      *
      */
-    // TODO - to deep understand the algorithm here
     private void findBoundary(){
         for (Pixel p : hole.getPixels()) {
             int x = p.getX();
@@ -86,7 +87,7 @@ public class HoledImage extends Image{
                         // skip diagonal neighbors, in case of 4-connected type
                         continue;
                     }
-                    if (!hole.isHole(grayscalePixels[y + i][x + j])) {
+                    if (!(i == 0 && j == 0) && !hole.isHole(grayscalePixels[y + i][x + j])) { //
                         hole.addToBoundary(grayscalePixels[y + i][x + j]);
                     }
                 }
@@ -94,3 +95,5 @@ public class HoledImage extends Image{
         }
     }
 }
+
+class ImageAndMaskAreWithDifferentSize extends Exception { }
