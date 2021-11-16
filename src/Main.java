@@ -5,19 +5,19 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            int cType = Integer.parseInt(args[4]);
-            float e = Float.parseFloat(args[3]);
-            int z = Integer.parseInt(args[2]);
-            String maskPath = args[1];
             String imagePath = args[0];
-
-            if (cType != 4 && cType != 8) {
-                throw new InvalidPixelConnectivity();
-            }
+            String maskPath = args[1];
+            int z = Integer.parseInt(args[2]);
+            float e = Float.parseFloat(args[3]);
+            int cType = Integer.parseInt(args[4]);
 
             if(args.length != 5){
                 System.out.println("Missing arguments (should be 5)\nUsage: [image path] [mask path] [z] [e] [pixel connectivity: 4/8]");
                 System.exit(1);
+            }
+
+            if (cType != 4 && cType != 8) {
+                throw new InvalidPixelConnectivity();
             }
 
             IRgbToGrayscaleFunc Rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
