@@ -5,7 +5,6 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            // parsing args
             int cType = Integer.parseInt(args[4]);
             float e = Float.parseFloat(args[3]);
             int z = Integer.parseInt(args[2]);

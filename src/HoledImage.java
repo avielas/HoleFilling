@@ -35,7 +35,7 @@ public class HoledImage extends Image{
      *
      */
     private void carveOutTheHole(){
-        // TODO to throw exception if image and mask are from different width height
+        // TODO to throw exception if image and mask are with different width, height
         try {
             BufferedImage maskBuffer = ImageIO.read(new File(maskPath));
             int width = maskBuffer.getWidth();
@@ -75,7 +75,7 @@ public class HoledImage extends Image{
     /**
      *
      */
-    // TODO - to understand the algorithm here
+    // TODO - to deep understand the algorithm here
     private void findBoundary(){
         for (Pixel p : hole.getPixels()) {
             int x = p.getX();
