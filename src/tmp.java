@@ -11,7 +11,7 @@ import java.awt.image.DataBufferByte;
 import java.io.File;
 
 
-public class HoleFilling {
+public class tmp {
 
     // Compulsory
     static{ System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }
