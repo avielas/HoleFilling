@@ -5,13 +5,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class HoledImage extends Image{
-    private final Hole hole;
-    private final RgbToGrayscaleFunc rgbToGrayscaleFunc;
-    private final String maskPath;
+    private Hole hole;
+    private IRgbToGrayscaleFunc rgbToGrayscaleFunc;
+    private String maskPath;
 
-    public HoledImage(String imagePath, String maskPath, int z, float e, int cType, RgbToGrayscaleFunc Rgb2GrayFunc, WeightFunc weightFunc) {
+    public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc, IWeightFunc weightFunc) {
         super(imagePath);
-        rgbToGrayscaleFunc = Rgb2GrayFunc;
+        rgbToGrayscaleFunc = rgb2GrayFunc;
         hole = new Hole(cType, weightFunc);
         this.maskPath = maskPath;
         carveOutTheHole();

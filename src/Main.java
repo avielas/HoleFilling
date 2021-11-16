@@ -16,10 +16,11 @@ public class Main {
                 throw new InvalidPixelConnectivity();
             }
 
-            RgbToGrayscaleFunc Rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
-            WeightFunc weightFunc = (Pixel u, Pixel v) -> (float) (1 / (Math.pow(MathCalculator.euclideanDist(u, v), z) + e));
+            // TODO - to understand this interface implementation syntax
+            IRgbToGrayscaleFunc Rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
+            IWeightFunc weightFunc = (Pixel u, Pixel v) -> (float) (1 / (Math.pow(MathCalculator.euclideanDist(u, v), z) + e));
 
-            HoledImage holedImage = new HoledImage(imagePath, maskPath, z, e, cType, Rgb2GrayFunc, weightFunc);
+            HoledImage holedImage = new HoledImage(imagePath, maskPath, cType, Rgb2GrayFunc, weightFunc);
             HoleFillingCalculator.fillHole(holedImage);
             holedImage.save(imagePath);
         }

@@ -9,7 +9,7 @@ public class HoleFillingCalculator implements IHoleFillingCalculator {
         }
     }
 
-    private static float calcColor(Pixel h, Set<Pixel> B, WeightFunc w) {
+    private static float calcColor(Pixel h, Set<Pixel> B, IWeightFunc w) {
         float numerator = 0;
         float denominator = 0;
 

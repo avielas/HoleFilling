@@ -36,7 +36,7 @@ public class Image {
         }
     }
 
-    public void bufferedImageToGrayscalePixels(RgbToGrayscaleFunc rgbToGrayscaleFunc){
+    public void bufferedImageToGrayscalePixels(IRgbToGrayscaleFunc rgbToGrayscaleFunc){
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
         grayscalePixels = new Pixel[height][width];

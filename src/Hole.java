@@ -4,10 +4,10 @@ import java.util.Set;
 public class Hole {
     private Set<Pixel> pixels;
     private Set<Pixel> boundary;
-    private WeightFunc weightFunc;
+    private IWeightFunc weightFunc;
     private int connectedType;
 
-    public Hole(int cType, WeightFunc weightFunc){
+    public Hole(int cType, IWeightFunc weightFunc){
         this.connectedType = cType;
         pixels = new HashSet();
         boundary = new HashSet();
@@ -30,7 +30,7 @@ public class Hole {
         boundary.add(p);
     }
 
-    public WeightFunc getWeightFunc() {
+    public IWeightFunc getWeightFunc() {
         return weightFunc;
     }
 

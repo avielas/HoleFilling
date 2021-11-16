@@ -6,35 +6,45 @@ class Image{
     # Pixel[][] greyscalePixels
     # String imagePath
     + Image(String imagePath)
+    + String getImagePath()
+    + BufferedImage getBufferedImage()
+    + Pixel[][] getGrayscalePixels()
     - void loadImageToBuffer()
     + void save(String pathToSave)
-    + void bufferedImageToGrayscalePixels(RgbToGrayscaleFunc rgbToGrayscaleFunc)
+    + void bufferedImageToGrayscalePixels(IRgbToGrayscaleFunc rgbToGrayscaleFunc)
 }
 
 class HoledImage extends Image{
     - String maskPath
-    - RgbToGrayscaleFunc rgbToGrayscaleFunc
+    - IRgbToGrayscaleFunc rgbToGrayscaleFunc
     - Hole hole
-    + HoledImage(String imagePath, String maskPath, int z, float e, int cType, RgbToGrayscaleFunc Rgb2GrayFunc, WeightFunc wFunc)
+    + HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc, IWeightFunc wFunc)
+    + Hole getHole()
     - void carveOutTheHole()
     - void findHole()
     - void findBoundary()
 }
 
 class Hole{
-    - Set<Pixel> hole
+    - Set<Pixel> pixels
     - Set<Pixel> boundary
-    - WeightFunc weightFunc
+    - IWeightFunc weightFunc
     - int connectedType
-    + Hole(int z, float e, int cType)
+    + Hole(int cType, IWeightFunc weightFunc)
+    + Set<Pixel> getPixels()
+    + Set<Pixel> getBoundary()
+    + void addToPixels(Pixel p)
+    + void addToBoundary(Pixel p)
+    + IWeightFunc getWeightFunc()
+    + int getConnectedType()
     + boolean isHole(Pixel p)
 }
 
-interface WeightFunc{
+interface IWeightFunc{
     + float weight(Pixel p1, Pixel p2)
 }
 
-interface RgbToGrayscaleFunc{
+interface IRgbToGrayscaleFunc{
     + float rgbToGrayscale(Color c)
 }
 
@@ -51,12 +61,12 @@ class Pixel{
 
 class HoleFillingCalculator implements IHoleFillingCalculator{
     + {static} void fillHole(HoledImage image)
-    - {static} float calcColor(Pixel h, Set<Pixel> B, WeightFunc w)
+    - {static} float calcColor(Pixel h, Set<Pixel> B, IWeightFunc w)
 }
 
 interface IHoleFillingCalculator{
     + {static} void fillHole(HoledImage image)
-    + {static} float calcColor(Pixel h, Set<Pixel> B, WeightFunc w)
+    + {static} float calcColor(Pixel h, Set<Pixel> B, IWeightFunc w)
 }
 
 class MathCalculator{
@@ -74,7 +84,7 @@ HoledImage "1" o-- "1" Hole : aggregation >
 
 
 'Composition
-HoledImage "1" *-- "1" RgbToGrayscaleFunc : composition >
-Hole "1" *-- "1" WeightFunc : composition >
+HoledImage "1" *-- "1" IRgbToGrayscaleFunc : composition >
+Hole "1" *-- "1" IWeightFunc : composition >
 
 @enduml
