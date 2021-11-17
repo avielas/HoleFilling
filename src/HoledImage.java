@@ -65,8 +65,8 @@ public class HoledImage extends Image{
     }
 
     private void findHole(){
-        for (int i = 1; i < grayscalePixels.length - 1; i++) {
-            for (int j = 1; j < grayscalePixels[0].length - 1; j++) {
+        for (int i = 0; i < grayscalePixels.length; i++) {
+            for (int j = 0; j < grayscalePixels[0].length; j++) {
                 if (grayscalePixels[i][j].getVal() == -1) {
                     hole.addToPixels(grayscalePixels[i][j]);
                 }
