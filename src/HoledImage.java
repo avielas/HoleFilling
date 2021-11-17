@@ -75,7 +75,7 @@ public class HoledImage extends Image{
     }
 
     /**
-     *
+     * complexity is O(n^2)
      */
     private void findBoundary(){
         for (Pixel p : hole.getPixels()) {
