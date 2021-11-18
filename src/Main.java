@@ -1,3 +1,5 @@
+import hole_filling.Pixel;
+
 import java.awt.*;
 import java.io.IOException;
 

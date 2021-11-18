@@ -1,3 +1,5 @@
+import hole_filling.Pixel;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,6 +10,7 @@ public class HoledImage extends Image{
     private Hole hole;
     private IRgbToGrayscaleFunc rgbToGrayscaleFunc;
     private String maskPath;
+    private boolean optimizedToNComplexity = false;
 
     /**
      *
@@ -29,6 +32,10 @@ public class HoledImage extends Image{
 
     public Hole getHole() {
         return hole;
+    }
+
+    public boolean getOptimizedToNComplexity() {
+        return optimizedToNComplexity;
     }
 
     /**

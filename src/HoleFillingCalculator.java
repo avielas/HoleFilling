@@ -1,3 +1,6 @@
+import hole_filling.Pixel;
+
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -8,8 +11,15 @@ public class HoleFillingCalculator implements IHoleFillingCalculator {
      * @param image
      */
     public static void fillHole(HoledImage image) {
+        Set<Pixel> B;
+        if(image.getOptimizedToNComplexity())
+            //TODO - to call boundary tracing
+            B = new HashSet<>();
+        else
+            B = image.getHole().getBoundary();
+
         for (Pixel h : image.getHole().getPixels()) {
-            h.setVal(calcColor(h, image.getHole().getBoundary(), image.getHole().getWeightFunc()));
+            h.setVal(calcPixel(h, B, image.getHole().getWeightFunc()));
         }
     }
 
@@ -28,7 +38,7 @@ public class HoleFillingCalculator implements IHoleFillingCalculator {
      * @param w
      * @return
      */
-    private static float calcColor(Pixel h, Set<Pixel> B, IWeightFunc w) {
+    private static float calcPixel(Pixel h, Set<Pixel> B, IWeightFunc w) {
         float numerator = 0;
         float denominator = 0;
 

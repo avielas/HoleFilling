@@ -1,3 +1,5 @@
+import hole_filling.Pixel;
+
 import java.util.HashSet;
 import java.util.Set;
 

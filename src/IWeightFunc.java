@@ -1,3 +1,4 @@
+import hole_filling.Pixel;
 
 @FunctionalInterface
 /**
