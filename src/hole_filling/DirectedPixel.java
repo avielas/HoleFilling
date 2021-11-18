@@ -1,6 +1,4 @@
-package boundary_tracing;
-
-import hole_filling.Pixel;
+package hole_filling;
 
 public class DirectedPixel extends Pixel {
 

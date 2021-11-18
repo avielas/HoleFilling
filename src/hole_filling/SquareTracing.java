@@ -1,7 +1,4 @@
-package boundary_tracing;
-
-import hole_filling.HoledImage;
-import hole_filling.Pixel;
+package hole_filling;
 
 import java.util.*;
 

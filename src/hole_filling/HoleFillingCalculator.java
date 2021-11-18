@@ -1,8 +1,5 @@
 package hole_filling;
 
-import boundary_tracing.SquareTracing;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

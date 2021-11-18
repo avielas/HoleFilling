@@ -1,4 +1,3 @@
-import boundary_tracing.SquareTracing;
 import hole_filling.Pixel;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -13,7 +12,6 @@ import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 

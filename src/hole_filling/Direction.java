@@ -1,4 +1,4 @@
-package boundary_tracing;
+package hole_filling;
 
 public enum Direction {
     NORTH(0), EAST(1), SOUTH(2), WEST(3);
