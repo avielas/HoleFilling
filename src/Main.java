@@ -1,4 +1,4 @@
-import hole_filling.Pixel;
+import hole_filling.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -12,9 +12,10 @@ public class Main {
             int z = Integer.parseInt(args[2]);
             float e = Float.parseFloat(args[3]);
             int cType = Integer.parseInt(args[4]);
+            boolean isOptimized = Boolean.parseBoolean(args[5]);
 
-            if(args.length != 5){
-                System.out.println("Missing arguments (should be 5)\nUsage: [image path] [mask path] [z] [e] [pixel connectivity: 4/8]");
+            if(args.length != 6){
+                System.out.println("Missing arguments (should be 5)\nUsage: [image path] [mask path] [z] [e] [pixel connectivity: 4/8] [true/false]");
                 System.exit(1);
             }
 
@@ -25,7 +26,7 @@ public class Main {
             IRgbToGrayscaleFunc Rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
             IWeightFunc weightFunc = (Pixel u, Pixel v) -> (float) (1 / (Math.pow(MathCalculator.euclideanDist(u, v), z) + e));
 
-            HoledImage holedImage = new HoledImage(imagePath, maskPath, cType, Rgb2GrayFunc, weightFunc);
+            HoledImage holedImage = new HoledImage(imagePath, maskPath, cType, Rgb2GrayFunc, weightFunc, isOptimized);
             HoleFillingCalculator.fillHole(holedImage);
             holedImage.save(imagePath);
         }
@@ -42,14 +43,14 @@ public class Main {
             System.out.println(e.fillInStackTrace());
             System.exit(1);
         }
-        catch (ImageAndMaskAreWithDifferentSize e){
+        catch (ImagesAreWithDifferentSizeException e){
             System.out.println(e.fillInStackTrace());
             System.exit(1);
         }
         catch (IOException e) {
             System.out.println(e.fillInStackTrace());
             System.exit(1);
-        } catch (FailedToExtractFileFormat e) {
+        } catch (FailedToExtractFileFormatException e) {
             System.out.println(e.fillInStackTrace());
             System.exit(1);
         }

@@ -43,6 +43,9 @@ public class DirectedPixel extends Pixel {
         if (this.y != other.y) {
             return false;
         }
+        if (this.direction != other.direction) {
+            return false;
+        }
         return true;
     }
 }

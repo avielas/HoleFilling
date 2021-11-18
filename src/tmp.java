@@ -1,3 +1,5 @@
+import boundary_tracing.SquareTracing;
+import hole_filling.Pixel;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.CvType;
@@ -61,7 +63,7 @@ public class tmp {
 //        String path = "C:\\Users\\aviel\\Downloads\\Hole_Filling\\";
 //        String imageName = "Lenna.png";
 //        convertRgbToGrey(path, imageName);
-//        Pixel[][] pixels = null;
+//        hole_filling.Pixel[][] pixels = null;
 
         try {
 
@@ -90,7 +92,7 @@ public class tmp {
             mat[3][4] = 1;
             mat[2][3] = 1;
 
-            // Hole (13)
+            // hole_filling.Hole (13)
             mat[2][4] = 1;
             mat[2][5] = 1;
             mat[3][5] = 1;
@@ -113,13 +115,13 @@ public class tmp {
             findHole(mat, H, mat.length, mat[0].length);
             findBoundary(mat, H, B);
 
-            List points = SquareTracingService.getContourPoints(mat);
+//            List<Pixel> points = SquareTracing.getBoundary(mat);
 
             System.out.println();
             //            String maskName = "Mask.png";
 //            File input = new File(path + maskName);
 //            BufferedImage buffer = ImageIO.read(input);
-//            pixels = new Pixel[buffer.getHeight()][buffer.getWidth()];
+//            pixels = new hole_filling.Pixel[buffer.getHeight()][buffer.getWidth()];
 //
 //            byte[] data = ((DataBufferByte) buffer.getRaster().getDataBuffer()).getData();
 //            Mat mat = new Mat(buffer.getHeight(), buffer.getWidth(), CvType.CV_8UC4);
@@ -154,7 +156,7 @@ public class tmp {
 //                        //Setting new Color object to the image
 ////                    buffer.setRGB(i, j, color.getRGB());
 //                    }
-//                    pixels[i][j] = new Pixel(i,j,value);
+//                    pixels[i][j] = new hole_filling.Pixel(i,j,value);
 //                }
 //
 //            System.out.println();

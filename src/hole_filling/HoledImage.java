@@ -1,4 +1,4 @@
-import hole_filling.Pixel;
+package hole_filling;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class HoledImage extends Image{
      * @param rgb2GrayFunc
      * @param weightFunc
      */
-    public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc, IWeightFunc weightFunc) throws ImageAndMaskAreWithDifferentSize {
+    public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc, IWeightFunc weightFunc, Boolean isOptimized) throws ImagesAreWithDifferentSizeException {
         super(imagePath);
         rgbToGrayscaleFunc = rgb2GrayFunc;
         hole = new Hole(cType, weightFunc);
@@ -28,6 +28,7 @@ public class HoledImage extends Image{
         carveOutTheHole();
         findHole();
         findBoundary();
+        optimizedToNComplexity = isOptimized;
     }
 
     public Hole getHole() {
@@ -48,7 +49,7 @@ public class HoledImage extends Image{
             int height = maskBuffer.getHeight();
 
             if(bufferedImage.getWidth() != width || bufferedImage.getHeight() != height)
-                throw new ImageAndMaskAreWithDifferentSize();
+                throw new ImagesAreWithDifferentSizeException();
 
             grayscalePixels = new Pixel[height][width];
             for (int i = 0; i < height; i++) {
@@ -65,7 +66,7 @@ public class HoledImage extends Image{
                     grayscalePixels[i][j] = new Pixel(i, j, value);
                 }
             }
-        } catch (IOException | ImageAndMaskAreWithDifferentSize e) {
+        } catch (IOException | ImagesAreWithDifferentSizeException e) {
             System.out.println(e.fillInStackTrace());
             System.exit(1);
         }
@@ -103,4 +104,3 @@ public class HoledImage extends Image{
     }
 }
 
-class ImageAndMaskAreWithDifferentSize extends Exception { }

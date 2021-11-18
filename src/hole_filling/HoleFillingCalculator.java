@@ -1,6 +1,10 @@
-import hole_filling.Pixel;
+package hole_filling;
 
+import boundary_tracing.SquareTracing;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -12,9 +16,12 @@ public class HoleFillingCalculator implements IHoleFillingCalculator {
      */
     public static void fillHole(HoledImage image) {
         Set<Pixel> B;
-        if(image.getOptimizedToNComplexity())
-            //TODO - to call boundary tracing
-            B = new HashSet<>();
+        List<Pixel> orderedByNeighborsB;
+
+        if(image.getOptimizedToNComplexity()) {
+            orderedByNeighborsB = SquareTracing.getBoundary(image);
+            B = calcBmeanColor(Consts.K, orderedByNeighborsB);
+        }
         else
             B = image.getHole().getBoundary();
 
@@ -23,12 +30,25 @@ public class HoleFillingCalculator implements IHoleFillingCalculator {
         }
     }
 
-    private static float calcBmeanColor(Set<Pixel> B) {
+    private static Set<Pixel> calcBmeanColor(int sections, List<Pixel> B) {
+        Set<Pixel> bMeanColorL = new HashSet<>();
+        int n = B.size();
+        int sectionSize = n/sections;
         float sum = 0;
+        int count = 0, countTot = 0;
+
         for (Pixel b : B) {
             sum+=b.getVal();
+            count++;
+            countTot++;
+            if(count == sectionSize || countTot == n){
+                float avr = sum/count;
+                bMeanColorL.add(new Pixel(b.getY(), b.getX(), avr));
+                sum = 0;
+                count = 0;
+            }
         }
-        return sum/B.size();
+        return bMeanColorL;
     }
 
     /**

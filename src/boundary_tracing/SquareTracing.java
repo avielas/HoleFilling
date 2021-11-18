@@ -1,11 +1,9 @@
 package boundary_tracing;
 
+import hole_filling.HoledImage;
 import hole_filling.Pixel;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -13,53 +11,41 @@ import java.util.Set;
  */
 public class SquareTracing {
 
-    public static Set<String> cache = new HashSet<>();
+    public static List<Pixel> getBoundary(HoledImage srcImage) {
+        Pixel[][] image = srcImage.getGrayscalePixels();
 
-    public static List<Pixel> getBoundary(int[][] srcImage) {
-        int[][] image = srcImage.clone();
-        clearBorder(image);
+        List<Pixel> pixels = new ArrayList<>();
+        Set<String> cache = new HashSet<>();
 
-        List<Pixel> pixels = new LinkedList();
-
-        DirectedPixel startPixel = getStartingPixel(image);
+        DirectedPixel startPixel = getStartingPixel(srcImage);
         DirectedPixel currPixel = new DirectedPixel(startPixel);
 
         do {
-            if (image[currPixel.getY()][currPixel.getX()] == 1) {
+            if (currPixel.getVal() == -1f || srcImage.getHole().isBoundary(currPixel)){
                 if(!cache.contains(currPixel.getY() + "$" + currPixel.getX())) {
-                    pixels.add(new DirectedPixel(currPixel));
+                    pixels.add(image[currPixel.getY()][currPixel.getX()]);
                     cache.add(currPixel.getY() + "$" + currPixel.getX());
                 }
-                 goLeft(currPixel);
+                goLeft(currPixel);
             } else {
                 goRight(currPixel);
             }
-
         } while (!startPixel.equals(currPixel));
 
         return pixels;
     }
 
     // find the most bottom pixel
-    private static DirectedPixel getStartingPixel(int[][] image) {
-        for (int y = image.length - 1; y >= 0; y--) {
-            for (int x = image[y].length - 1; x >= 0; x--) {
-                if (image[y][x] == 1) {
-                    return new DirectedPixel(x, y, image[y][x]);
+    private static DirectedPixel getStartingPixel(HoledImage image) {
+        Pixel[][] pixels = image.getGrayscalePixels();
+        for (int y = pixels.length - 1; y >= 0; y--) {
+            for (int x = pixels[y].length - 1; x >= 0; x--) {
+                if (pixels[y][x].getVal() == -1f || image.getHole().isBoundary(pixels[y][x])) {
+                    return new DirectedPixel(x, y, pixels[y][x].getVal());
                 }
             }
         }
         return null;
-    }
-
-    private static void clearBorder(int[][] image) {
-        for (int y = 0; y < image.length; y++) {
-            for (int x = 0; x < image[y].length; x++) {
-                if (y == 0 || x == 0 || y == image.length - 1 || x == image[y].length - 1) {
-                    image[y][x] = 0;
-                }
-            }
-        }
     }
 
     public static void faceRight(DirectedPixel pixel) {

@@ -1,4 +1,4 @@
-import hole_filling.Pixel;
+package hole_filling;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,6 +6,7 @@ import java.util.Set;
 public class Hole {
     private Set<Pixel> pixels;
     private Set<Pixel> boundary;
+    private Set<String> boundaryKeys;
     private IWeightFunc weightFunc;
     private int connectedType;
 
@@ -18,6 +19,7 @@ public class Hole {
         this.connectedType = cType;
         pixels = new HashSet();
         boundary = new HashSet();
+        boundaryKeys = new HashSet<>();
         this.weightFunc = weightFunc;
     }
 
@@ -35,6 +37,7 @@ public class Hole {
 
     public void addToBoundary(Pixel p){
         boundary.add(p);
+        boundaryKeys.add(p.getY() + "$" + p.getX());
     }
 
     public IWeightFunc getWeightFunc() {
@@ -47,5 +50,9 @@ public class Hole {
 
     public boolean isHole(Pixel p){
         return pixels.contains(p);
+    }
+
+    public boolean isBoundary(Pixel p){
+        return boundaryKeys.contains(p.getY() + "$" + p.getX());
     }
 }

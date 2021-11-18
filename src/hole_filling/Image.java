@@ -1,4 +1,4 @@
-import hole_filling.Pixel;
+package hole_filling;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -66,7 +66,7 @@ public class Image {
      * @param pathToSave
      * @throws IOException
      **/
-    public void save(String pathToSave) throws IOException, FailedToExtractFileFormat {
+    public void save(String pathToSave) throws IOException, FailedToExtractFileFormatException {
         Path path = Paths.get(pathToSave);
         String fileName = path.getFileName().toString();
         String directory = path.getParent().toString();
@@ -77,7 +77,7 @@ public class Image {
             fileName = fileName.substring(0, idx);
         }
         else{
-            throw new FailedToExtractFileFormat();
+            throw new FailedToExtractFileFormatException();
         }
 
         BufferedImage filledImage = new BufferedImage(grayscalePixels[0].length, grayscalePixels.length, BufferedImage.TYPE_INT_RGB);
@@ -94,4 +94,3 @@ public class Image {
     }
 }
 
-class FailedToExtractFileFormat extends Exception { }
