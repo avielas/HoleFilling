@@ -93,19 +93,19 @@ public class tmp {
             mat[2][3] = 1;
 
             // hole_filling.Hole (13)
-            mat[2][4] = 1;
-            mat[2][5] = 1;
-            mat[3][5] = 1;
-            mat[4][5] = 1;
-            mat[3][6] = 1;
-            mat[4][6] = 1;
-            mat[5][6] = 1;
-            mat[3][7] = 1;
-            mat[4][7] = 1;
-            mat[4][8] = 1;
-            mat[2][9] = 1;
-            mat[3][9] = 1;
-            mat[4][9] = 1;
+            mat[2][4] = -1;
+            mat[2][5] = -1;
+            mat[3][5] = -1;
+            mat[4][5] = -1;
+            mat[3][6] = -1;
+            mat[4][6] = -1;
+            mat[5][6] = -1;
+            mat[3][7] = -1;
+            mat[4][7] = -1;
+            mat[4][8] = -1;
+            mat[2][9] = -1;
+            mat[3][9] = -1;
+            mat[4][9] = -1;
 
             printMat(mat, mat.length, mat[0].length);
 
