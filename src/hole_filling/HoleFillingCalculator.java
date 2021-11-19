@@ -8,8 +8,8 @@ import java.util.Set;
 public class HoleFillingCalculator implements IHoleFillingCalculator {
 
     /**
-     *
-     * @param image
+     * Utility function which ...
+     * @param image - bla bla bla
      */
     public static void fillHole(HoledImage image) {
         Set<Pixel> B;
@@ -27,6 +27,12 @@ public class HoleFillingCalculator implements IHoleFillingCalculator {
         }
     }
 
+    /**
+     * ha ha ha
+     * @param sections
+     * @param B
+     * @return
+     */
     private static Set<Pixel> calcBmeanColor(int sections, List<Pixel> B) {
         Set<Pixel> bMeanColorL = new HashSet<>();
         int n = B.size();

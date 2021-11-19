@@ -14,7 +14,7 @@ public class Image {
     protected Pixel[][] grayscalePixels;
 
     /**
-     *
+     * ga ga ga
      * @param imagePath
      */
     public Image(String imagePath){
