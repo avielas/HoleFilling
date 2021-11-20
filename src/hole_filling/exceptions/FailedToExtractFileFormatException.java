@@ -1,4 +1,4 @@
-package hole_filling;
+package hole_filling.exceptions;
 
 public class FailedToExtractFileFormatException extends Exception {
 }

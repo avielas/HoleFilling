@@ -1,6 +1,8 @@
 import hole_filling.*;
+import hole_filling.exceptions.*;
+import hole_filling.interfaces.*;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 
 public class HoleFilling {
@@ -9,12 +11,12 @@ public class HoleFilling {
         try {
 
             if(args.length == 1 && (args[0].equals("--help") || args[0].equals("-h"))){
-                System.out.println("Usage: [image path] [mask path] [z] [e] [pixel connectivity: 4/8] [true/false]");
+                System.out.println("Usage: java HoleFilling [image path] [mask path] [z] [e] [pixel connectivity: 4/8] [approximates O(n) algorithm true/false]");
                 System.exit(1);
             }
 
             if(args.length != 6){
-                System.out.println("Missing arguments (should be 5)\nUsage: [image path] [mask path] [z] [e] [pixel connectivity: 4/8] [true/false]");
+                System.out.println("Missing arguments (should be 5)\nUsage: java HoleFilling [image path] [mask path] [z] [e] [pixel connectivity: 4/8] [approximates O(n) algorithm true/false]");
                 System.exit(1);
             }
 
@@ -29,12 +31,14 @@ public class HoleFilling {
                 throw new InvalidPixelConnectivity();
             }
 
-            IRgbToGrayscaleFunc Rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
+            /*** Example of how to use HoleFilling library ***/
+            IRgbToGrayscaleFunc rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
             IWeightFunc weightFunc = (Pixel u, Pixel v) -> (float) (1 / (Math.pow(MathCalculator.euclideanDist(u, v), z) + e));
 
-            HoledImage holedImage = new HoledImage(imagePath, maskPath, cType, Rgb2GrayFunc, weightFunc, isOptimized);
-            HoleFillingCalculator.fillHole(holedImage);
-            holedImage.save(imagePath);
+            HoledImage holedImage = new HoledImage(imagePath, maskPath, cType, rgb2GrayFunc);
+            HoleFillingLib.fillHole(holedImage, weightFunc, isOptimized);
+            holedImage.save();
+            /************** End of the example ***************/
         }
         catch (ArrayIndexOutOfBoundsException | IOException | FailedToExtractFileFormatException | ImagesAreWithDifferentSizeException | NumberFormatException e) {
             System.out.println(e.fillInStackTrace());
@@ -47,4 +51,3 @@ public class HoleFilling {
     }
 }
 
-class InvalidPixelConnectivity extends Exception { }

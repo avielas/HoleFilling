@@ -1,4 +1,4 @@
-package hole_filling;
+package hole_filling.interfaces;
 
 import java.awt.*;
 

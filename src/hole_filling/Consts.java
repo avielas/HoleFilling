@@ -1,7 +1,7 @@
 package hole_filling;
 
 /**
- *
+ * Consts class
  */
 
 public class Consts {

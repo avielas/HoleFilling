@@ -1,5 +1,9 @@
 package hole_filling;
 
+/**
+ * This class represents directed pixel that's extends from Pixel and used for Boundary Tracing Algorithm. Each Pixel also has a direction that points to
+ * the next step before going forward
+ */
 public class DirectedPixel extends Pixel {
 
     private Direction direction;

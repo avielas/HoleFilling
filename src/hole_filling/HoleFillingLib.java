@@ -1,39 +1,47 @@
 package hole_filling;
 
+import hole_filling.interfaces.IHoleFillingLib;
+import hole_filling.interfaces.IWeightFunc;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-public class HoleFillingCalculator implements IHoleFillingCalculator {
+/**
+ * This class represents the image processing library functionality which fills a hole in an image
+ */
+public class HoleFillingLib implements IHoleFillingLib {
 
     /**
-     * Utility function which ...
-     * @param image - bla bla bla
+     * Utility function, which fills a hole in an image. The complexity is O(n*m) by default when
+     * n is the hole's pixels quantity and m is the hole's boundary
+     * @param image - HoledImage object
+     * @param weightFunc - weight function implementation which fills hole algorithm must use
+     * @param isOptimized - optimized algorithm that approximates the result in O(n) to a high degree of accuracy
      */
-    public static void fillHole(HoledImage image) {
+    public static void fillHole(HoledImage image, IWeightFunc weightFunc, boolean isOptimized) {
         Set<Pixel> B;
         List<Pixel> orderedByNeighborsB;
 
-        if(image.getOptimizedToNComplexity()) {
+        if(isOptimized) {
             orderedByNeighborsB = SquareTracing.getBoundary(image);
-            B = calcBmeanColor(Consts.K, orderedByNeighborsB);
+            B = calcBAverageColors(Consts.K, orderedByNeighborsB);
         }
         else
             B = image.getHole().getBoundary();
 
         for (Pixel h : image.getHole().getPixels()) {
-            h.setVal(calcPixel(h, B, image.getHole().getWeightFunc()));
+            h.setVal(calcPixel(h, B, weightFunc));
         }
     }
 
     /**
-     * ha ha ha
-     * @param sections
-     * @param B
-     * @return
+     * calculate the B average colors. see solution to Q2 for more explanation
+     * @param sections - is Consts.K by default
+     * @param B - ordered boundary pixels - neighbor by neighbor
+     * @return Set<Pixel> average pixel values of hole boundary
      */
-    private static Set<Pixel> calcBmeanColor(int sections, List<Pixel> B) {
+    private static Set<Pixel> calcBAverageColors(int sections, List<Pixel> B) {
         Set<Pixel> bMeanColorL = new HashSet<>();
         int n = B.size();
         int sectionSize = n/sections;

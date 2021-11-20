@@ -12,16 +12,21 @@ public class SquareTracing {
         Pixel[][] image = srcImage.getGrayscalePixels();
 
         List<Pixel> pixels = new ArrayList<>();
+        //cache - to prevent adding pixels which already visited
         Set<String> cache = new HashSet<>();
+        //boundaryByKeys - for checking if DirectedPixel is on the boundary (isBoundary() function
+        //works just with Pixel)
+        Set<String> boundaryByKeys = createBoundaryByKeys(srcImage.getHole().getBoundary());
 
         DirectedPixel startPixel = getStartingPixel(srcImage);
         DirectedPixel currPixel = new DirectedPixel(startPixel);
 
         do {
-            if (currPixel.getVal() == -1f || srcImage.getHole().isBoundary(currPixel)){
-                if(!cache.contains(currPixel.getY() + "$" + currPixel.getX())) {
+            String currPixelKey = currPixel.getY() + "$" + currPixel.getX();
+            if (currPixel.getVal() == -1f || boundaryByKeys.contains(currPixelKey)){
+                if(!cache.contains(currPixelKey)) {
                     pixels.add(image[currPixel.getY()][currPixel.getX()]);
-                    cache.add(currPixel.getY() + "$" + currPixel.getX());
+                    cache.add(currPixelKey);
                 }
                 goLeft(currPixel);
             } else {
@@ -32,7 +37,18 @@ public class SquareTracing {
         return pixels;
     }
 
-    // find the most bottom pixel
+    private static Set<String> createBoundaryByKeys(Set<Pixel> boundary) {
+        Set<String> boundaryByKeys = new HashSet<>();
+        for(Pixel p : boundary)
+            boundaryByKeys.add(p.getY() + "$" + p.getX());
+        return boundaryByKeys;
+    }
+
+    /**
+     * Find the most bottom pixel
+     * @param image
+     * @return
+     */
     private static DirectedPixel getStartingPixel(HoledImage image) {
         Pixel[][] pixels = image.getGrayscalePixels();
         for (int y = pixels.length - 1; y >= 0; y--) {

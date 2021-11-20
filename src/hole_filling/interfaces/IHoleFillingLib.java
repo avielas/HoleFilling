@@ -1,11 +1,15 @@
-package hole_filling;
+package hole_filling.interfaces;
+
+import hole_filling.HoledImage;
+import hole_filling.Pixel;
+import hole_filling.exceptions.NotImplementedFunctionException;
 
 import java.util.Set;
 
 /**
  *
  */
-public interface IHoleFillingCalculator {
+public interface IHoleFillingLib {
     /**
      * bi bi bi
      * @param image
@@ -24,4 +28,3 @@ public interface IHoleFillingCalculator {
     static float calcColor(Pixel h, Set<Pixel> B, IWeightFunc w) throws NotImplementedFunctionException { throw new NotImplementedFunctionException();}
 }
 
-class NotImplementedFunctionException extends Exception { }

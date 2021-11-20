@@ -1,42 +1,64 @@
 package hole_filling;
 
+import hole_filling.exceptions.FailedToExtractFileFormatException;
+import hole_filling.interfaces.IRgbToGrayscaleFunc;
+
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/***
+ * This class represents an RGB image. Also, it loads the image to buffer when initialized.
+ * Ths class also contains the functionality of converting RGB image to GRAYSCALE
+ */
 public class Image {
     protected String imagePath;
-    protected BufferedImage bufferedImage;
+    protected BufferedImage imageBuffer;
     protected Pixel[][] grayscalePixels;
 
-    /**
-     * ga ga ga
-     * @param imagePath
+    /***
+     *
+     * @param imagePath - path to RGB image
      */
     public Image(String imagePath){
         this.imagePath = imagePath;
         loadImageToBuffer();
     }
 
+    /**
+     *
+     * @return String to image path
+     */
     public String getImagePath() {
         return imagePath;
     }
 
-    public BufferedImage getBufferedImage() {
-        return bufferedImage;
+    /***
+     *
+     * @return BufferedImage that's holds the image buffer
+     */
+    public BufferedImage getImageBuffer() {
+        return imageBuffer;
     }
 
+    /***
+     *
+     * @return Pixel[][] with image pixels
+     */
     public Pixel[][] getGrayscalePixels() {
         return grayscalePixels;
     }
 
+    /***
+     * Load the image to BufferedImage imageBuffer object
+     */
     private void loadImageToBuffer(){
         try {
-            bufferedImage = ImageIO.read(new File(imagePath));
+            imageBuffer = ImageIO.read(new File(imagePath));
         } catch (IOException e) {
             System.out.println(e.fillInStackTrace());
             System.exit(1);
@@ -44,30 +66,29 @@ public class Image {
     }
 
     /**
-     *
-     * @param rgbToGrayscaleFunc
+     * Convert an RGB image to grayscale by rgb2GrayFunc
+     * @param rgb2GrayFunc - IRgbToGrayscaleFunc interface implementation
      **/
-    public void bufferedImageToGrayscalePixels(IRgbToGrayscaleFunc rgbToGrayscaleFunc){
-        int width = bufferedImage.getWidth();
-        int height = bufferedImage.getHeight();
+    public void bufferedImageToGrayscalePixels(IRgbToGrayscaleFunc rgb2GrayFunc){
+        int width = imageBuffer.getWidth();
+        int height = imageBuffer.getHeight();
         grayscalePixels = new Pixel[height][width];
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                Color pixelColor = new Color(bufferedImage.getRGB(j, i));
-                float value = rgbToGrayscaleFunc.rgbToGrayscale(pixelColor);
+                Color pixelColor = new Color(imageBuffer.getRGB(j, i));
+                float value = rgb2GrayFunc.rgbToGrayscale(pixelColor);
                 grayscalePixels[i][j] = new Pixel(i, j, value);
             }
         }
     }
 
     /**
-     *
-     * @param pathToSave
+     * Save the image to the same directory as the source image with adding '_FILLED_HOLE' to its name
      * @throws IOException
      **/
-    public void save(String pathToSave) throws IOException, FailedToExtractFileFormatException {
-        Path path = Paths.get(pathToSave);
+    public void save() throws IOException, FailedToExtractFileFormatException {
+        Path path = Paths.get(imagePath);
         String fileName = path.getFileName().toString();
         String directory = path.getParent().toString();
         String format;

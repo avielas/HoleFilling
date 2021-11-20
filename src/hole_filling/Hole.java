@@ -3,24 +3,22 @@ package hole_filling;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class represents a hole inside an image. Each hole described by pixels, boundary, and connected type
+ */
 public class Hole {
     private Set<Pixel> pixels;
     private Set<Pixel> boundary;
-    private Set<String> boundaryKeys;
-    private IWeightFunc weightFunc;
     private int connectedType;
 
     /**
      *
      * @param cType
-     * @param weightFunc
      */
-    public Hole(int cType, IWeightFunc weightFunc){
+    public Hole(int cType){
         this.connectedType = cType;
         pixels = new HashSet();
         boundary = new HashSet();
-        boundaryKeys = new HashSet<>();
-        this.weightFunc = weightFunc;
     }
 
     public Set<Pixel> getPixels() {
@@ -37,11 +35,6 @@ public class Hole {
 
     public void addToBoundary(Pixel p){
         boundary.add(p);
-        boundaryKeys.add(p.getY() + "$" + p.getX());
-    }
-
-    public IWeightFunc getWeightFunc() {
-        return weightFunc;
     }
 
     public int getConnectedType() {
@@ -53,6 +46,6 @@ public class Hole {
     }
 
     public boolean isBoundary(Pixel p){
-        return boundaryKeys.contains(p.getY() + "$" + p.getX());
+        return boundary.contains(p);
     }
 }

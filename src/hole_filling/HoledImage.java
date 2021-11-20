@@ -1,46 +1,50 @@
 package hole_filling;
 
+import hole_filling.exceptions.ImagesAreWithDifferentSizeException;
+import hole_filling.interfaces.IRgbToGrayscaleFunc;
+
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class represents an image with a hole (extends from Image). Also, it implements the functionality that's needed to carve out a hole in an image
+ */
 public class HoledImage extends Image{
     private Hole hole;
-    private IRgbToGrayscaleFunc rgbToGrayscaleFunc;
+    private IRgbToGrayscaleFunc rgb2GrayFunc;
     private String maskPath;
-    private boolean optimizedToNComplexity = false;
 
     /**
      *
-     * @param imagePath
-     * @param maskPath
-     * @param cType
-     * @param rgb2GrayFunc
-     * @param weightFunc
+     * @param imagePath - path to RGB image
+     * @param maskPath - path to RGB mask that must be as the same width/height of the RGB image
+     * @param cType - connected-type (4 or 8) for ing the hole's boundary
+     * @param rgb2GrayFunc - a function that defines the RGB2GRAY conversion for each pixel
      */
-    public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc, IWeightFunc weightFunc, Boolean isOptimized) throws ImagesAreWithDifferentSizeException {
+    public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc) throws ImagesAreWithDifferentSizeException {
         super(imagePath);
-        rgbToGrayscaleFunc = rgb2GrayFunc;
-        hole = new Hole(cType, weightFunc);
+        this.rgb2GrayFunc = rgb2GrayFunc;
+        hole = new Hole(cType);
         this.maskPath = maskPath;
         carveOutTheHole();
         findHole();
         findBoundary();
-        optimizedToNComplexity = isOptimized;
-    }
-
-    public Hole getHole() {
-        return hole;
-    }
-
-    public boolean getOptimizedToNComplexity() {
-        return optimizedToNComplexity;
     }
 
     /**
      *
+     * @return Hole class
+     */
+    public Hole getHole() {
+        return hole;
+    }
+
+    /**
+     * Implements the logic of carve out a hole in an image according the given mask, rgbToGrayscaleFunc and
+     * given intensity value on 0.5
      */
     private void carveOutTheHole(){
         try {
@@ -48,7 +52,7 @@ public class HoledImage extends Image{
             int width = maskBuffer.getWidth();
             int height = maskBuffer.getHeight();
 
-            if(bufferedImage.getWidth() != width || bufferedImage.getHeight() != height)
+            if(imageBuffer.getWidth() != width || imageBuffer.getHeight() != height)
                 throw new ImagesAreWithDifferentSizeException();
 
             grayscalePixels = new Pixel[height][width];
@@ -56,10 +60,11 @@ public class HoledImage extends Image{
                 for (int j = 0; j < width; j++) {
                     float value;
                     Color c = new Color(maskBuffer.getRGB(j, i));
-                    if (rgbToGrayscaleFunc.rgbToGrayscale(c) > Consts.PIXEL_INTENSITY_VALUE) {
+                    if (rgb2GrayFunc.rgbToGrayscale(c) > Consts.PIXEL_INTENSITY_VALUE) {
                         // if pixel (j,i) is not a 'hole pixel' convert its color to grayscale
-                        Color pixelColor = new Color(bufferedImage.getRGB(j, i));
-                        value = rgbToGrayscaleFunc.rgbToGrayscale(pixelColor);
+                        // according to rgbToGrayscaleFunc
+                        Color pixelColor = new Color(imageBuffer.getRGB(j, i));
+                        value = rgb2GrayFunc.rgbToGrayscale(pixelColor);
                     } else {
                         value = Consts.HOLE_VALUE;
                     }
@@ -72,6 +77,9 @@ public class HoledImage extends Image{
         }
     }
 
+    /***
+     * Finds a hole inside an image assuming -1 is the hole pixel value
+     */
     private void findHole(){
         for (int i = 0; i < grayscalePixels.length; i++) {
             for (int j = 0; j < grayscalePixels[0].length; j++) {
@@ -83,7 +91,7 @@ public class HoledImage extends Image{
     }
 
     /**
-     * complexity is O(n^2)
+     * Find the boundary of the hole by connected-type (4/8)
      */
     private void findBoundary(){
         for (Pixel p : hole.getPixels()) {
