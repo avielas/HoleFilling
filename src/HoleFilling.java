@@ -36,28 +36,12 @@ public class HoleFilling {
             HoleFillingCalculator.fillHole(holedImage);
             holedImage.save(imagePath);
         }
-        catch (ArrayIndexOutOfBoundsException e) {
+        catch (ArrayIndexOutOfBoundsException | IOException | FailedToExtractFileFormatException | ImagesAreWithDifferentSizeException | NumberFormatException e) {
             System.out.println(e.fillInStackTrace());
             System.exit(1);
         }
         catch (InvalidPixelConnectivity e) {
             System.out.println("Invalid connectivity type");
-            System.exit(1);
-        }
-        catch(NumberFormatException e) {
-            // for catch exception if parseFloat/parseFloat failed
-            System.out.println(e.fillInStackTrace());
-            System.exit(1);
-        }
-        catch (ImagesAreWithDifferentSizeException e){
-            System.out.println(e.fillInStackTrace());
-            System.exit(1);
-        }
-        catch (IOException e) {
-            System.out.println(e.fillInStackTrace());
-            System.exit(1);
-        } catch (FailedToExtractFileFormatException e) {
-            System.out.println(e.fillInStackTrace());
             System.exit(1);
         }
     }
