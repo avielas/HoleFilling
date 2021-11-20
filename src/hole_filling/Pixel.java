@@ -1,7 +1,8 @@
 package hole_filling;
 
 /**
- * A hole_filling.Pixel obj which holds a float val that's in range [0,1]
+ * This class represents the pixel in an image, which holds a float value that's in range [0,1]
+ *
  */
 
 public class Pixel {

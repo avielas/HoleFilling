@@ -3,11 +3,17 @@ package hole_filling;
 import java.util.*;
 
 /**
- *
- * @author nayef
+ * This class represents the Boundary Tracing algorithm and implement its functionality (see wikipedia for more background).
+ * This algorithm run when you set isOptimized=true at HoleFillingLib.fillHole() function call, to optimize the hole filling algorithm.
+ * It approximates the result in O(n) to a high degree of accuracy
  */
 public class SquareTracing {
 
+    /***
+     * This function implements the algorithm which pass boundary pixels by order (neighbor by neighbor) and return them
+     * @param srcImage - holed image
+     * @return List<Pixel> ordered pixels list (neighbor by neighbor)
+     */
     public static List<Pixel> getBoundary(HoledImage srcImage) {
         Pixel[][] image = srcImage.getGrayscalePixels();
 
@@ -45,9 +51,9 @@ public class SquareTracing {
     }
 
     /**
-     * Find the most bottom pixel
-     * @param image
-     * @return
+     * Find the most bottom hole pixel
+     * @param image - holed image
+     * @return DirectedPixel which is the most bottom hole pixel
      */
     private static DirectedPixel getStartingPixel(HoledImage image) {
         Pixel[][] pixels = image.getGrayscalePixels();

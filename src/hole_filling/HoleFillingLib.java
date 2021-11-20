@@ -63,11 +63,11 @@ public class HoleFillingLib implements IHoleFillingLib {
     }
 
     /**
-     *
-     * @param h
-     * @param B
-     * @param w
-     * @return
+     * calculate the new hole pixel value according to the exercise given formula
+     * @param h - the hole pixel
+     * @param B - the boundary pixels
+     * @param w - weight function
+     * @return float value
      */
     private static float calcPixel(Pixel h, Set<Pixel> B, IWeightFunc w) {
         float numerator = 0;
