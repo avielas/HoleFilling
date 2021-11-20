@@ -33,7 +33,7 @@ public class HoleFilling {
 
             /*** Example of how to use HoleFilling library ***/
             IRgbToGrayscaleFunc rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
-            IWeightFunc weightFunc = (Pixel u, Pixel v) -> (float) (1 / (Math.pow(MathCalculator.euclideanDist(u, v), z) + e));
+            IWeightFunc weightFunc = (Pixel u, Pixel v) -> (float) (1 / (Math.pow(MathCalculator.euclideanDistance(u, v), z) + e));
 
             HoledImage holedImage = new HoledImage(imagePath, maskPath, cType, rgb2GrayFunc);
             HoleFillingLib.fillHole(holedImage, weightFunc, isOptimized);

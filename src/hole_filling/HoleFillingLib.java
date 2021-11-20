@@ -1,6 +1,5 @@
 package hole_filling;
 
-import hole_filling.interfaces.IHoleFillingLib;
 import hole_filling.interfaces.IWeightFunc;
 
 import java.util.HashSet;
@@ -10,7 +9,7 @@ import java.util.Set;
 /**
  * This class represents the image processing library functionality which fills a hole in an image
  */
-public class HoleFillingLib implements IHoleFillingLib {
+public class HoleFillingLib {
 
     /**
      * Utility function, which fills a hole in an image. The complexity is O(n*m) by default when

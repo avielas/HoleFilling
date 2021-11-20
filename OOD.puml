@@ -2,23 +2,23 @@
 'https://plantuml.com/class-diagram
 
 class Image{
-    # BufferedImage bufferedImage
+    # BufferedImage imageBuffer
     # Pixel[][] greyscalePixels
     # String imagePath
     + Image(String imagePath)
     + String getImagePath()
-    + BufferedImage getBufferedImage()
+    + BufferedImage getImageBuffer()
     + Pixel[][] getGrayscalePixels()
     - void loadImageToBuffer()
-    + void save(String pathToSave)
     + void bufferedImageToGrayscalePixels(IRgbToGrayscaleFunc rgbToGrayscaleFunc)
+    + void save()
 }
 
 class HoledImage extends Image{
     - String maskPath
-    - IRgbToGrayscaleFunc rgbToGrayscaleFunc
+    - IRgbToGrayscaleFunc rgb2GrayFunc
     - Hole hole
-    + HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc, IWeightFunc wFunc)
+    + HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc)
     + Hole getHole()
     - void carveOutTheHole()
     - void findHole()
@@ -28,9 +28,8 @@ class HoledImage extends Image{
 class Hole{
     - Set<Pixel> pixels
     - Set<Pixel> boundary
-    - IWeightFunc weightFunc
     - int connectedType
-    + Hole(int cType, IWeightFunc weightFunc)
+    + Hole(int cType)
     + Set<Pixel> getPixels()
     + Set<Pixel> getBoundary()
     + void addToPixels(Pixel p)
@@ -38,6 +37,57 @@ class Hole{
     + IWeightFunc getWeightFunc()
     + int getConnectedType()
     + boolean isHole(Pixel p)
+    + boolean isBoundary(Pixel p)
+}
+
+class Pixel{
+    # int x
+    # int y
+    # float val
+    + Pixel(int y, int x, int val)
+    + int getY()
+    + int getX()
+    + float getVal()
+    + void setVal(float val)
+}
+
+class DirectedPixel extends Pixel{
+    - Direction direction
+    + DirectedPixel(int x, int y, float val)
+    + DirectedPixel(DirectedPixel refDirectedPixel)
+    + Direction getDirection()
+    + void setX(int x)
+    + void setY(int y)
+    + void rotateRight()
+    + void rotateLeft()
+    + boolean equals(Object obj)
+}
+
+enum Direction{
+    + 0 UP : int
+    + 1 RIGHT : int
+    + 2 DOWN : int
+    + 3 LEFT : int
+    - Direction(int v)
+    - int value
+    + Direction getDirectionByValue(int v)
+    + Direction rotateRight()
+    + Direction rotateLeft()
+}
+
+class HoleFillingLib{
+    + {static} void fillHole(HoledImage image, IWeightFunc weightFunc, boolean isOptimized)
+    - {static} float calcColor(Pixel h, Set<Pixel> B, IWeightFunc w)
+    - {static} Set<Pixel> calcBAverageColors(int sections, List<Pixel> B)
+}
+
+class SquareTracing{
+    + {static} List<Pixel> getBoundary(HoledImage srcImage)
+    - {static} Set<String> createBoundaryByKeys(Set<Pixel> boundary)
+    - {static} DirectedPixel getStartingPixel(HoledImage image)
+    - {static} void stepForward(DirectedPixel pixel)
+    - {static} void goLeft(DirectedPixel pixel)
+    - {static} void goRight(DirectedPixel pixel)
 }
 
 interface IWeightFunc{
@@ -48,27 +98,6 @@ interface IRgbToGrayscaleFunc{
     + float rgbToGrayscale(Color c)
 }
 
-class Pixel{
-    - int x
-    - int y
-    - float val
-    + Pixel(int y, int x, int val)
-    + int getY()
-    + int getX()
-    + float getVal()
-    + void setVal(float val)
-}
-
-class HoleFillingCalculator implements IHoleFillingCalculator{
-    + {static} void fillHole(HoledImage image)
-    - {static} float calcColor(Pixel h, Set<Pixel> B, IWeightFunc w)
-}
-
-interface IHoleFillingCalculator{
-    + {static} void fillHole(HoledImage image)
-    + {static} float calcColor(Pixel h, Set<Pixel> B, IWeightFunc w)
-}
-
 class MathCalculator{
     + {static} float euclideanDistance(Pixel p1, Pixel p2)
 }
@@ -76,6 +105,7 @@ class MathCalculator{
 class Consts{
     + {static} final double PIXEL_INTENSITY_VALUE
     + {static} final double HOLE_VALUE
+    + {static} final int K
 }
 
 'Aggregation
@@ -85,7 +115,6 @@ HoledImage "1" o-- "1" Hole : aggregation >
 
 'Composition
 HoledImage "1" *-- "1" IRgbToGrayscaleFunc : composition >
-HoledImage "1" *-- "1" IWeightFunc : composition >
-Hole "1" *-- "1" IWeightFunc : composition >
+Hole "1" *-- "many" Pixel : aggregation >
 
 @enduml

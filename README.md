@@ -15,16 +15,20 @@ This library fills a hole in an image by doing the following steps:
 * Save the filled image in source image directory
 
 
-# How to use command line utility?
+# How to use the command line utility?
 
 * Command line utility location is HoleFilling\out\production\HoleFilling
 * Firstly run: 
   * java HoleFilling -h 
 * More useful examples:
-  * java HoleFilling C:\path_to_dir\Lenna.png C:\path_to_dir\Mask.png 3 0.01 8 true
-  * java HoleFilling C:\path_to_dir\Lenna.png C:\path_to_dir\Mask.png 3 0.01 8 false
+  * java HoleFilling C:\path_to_dir\test1.png C:\path_to_dir\test1Mask.png 3 0.01 8 true
+  * java HoleFilling C:\path_to_dir\test2.jpg C:\path_to_dir\test1Mask.jpg 3 0.01 8 false
 
 
 # How to use the library?
 
 * See HoleFilling.java for example. Also, you can read the library's documentation 
+
+# Tests images
+
+You can use images at HoleFilling\tests directory with the utility

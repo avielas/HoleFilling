@@ -13,9 +13,9 @@ public class DirectedPixel extends Pixel {
         this.direction = Direction.UP;
     }
 
-    public DirectedPixel(DirectedPixel refPoint) {
-        super(refPoint.y, refPoint.x, refPoint.val);
-        this.direction = refPoint.direction;
+    public DirectedPixel(DirectedPixel refDirectedPixel) {
+        super(refDirectedPixel.y, refDirectedPixel.x, refDirectedPixel.val);
+        this.direction = refDirectedPixel.direction;
     }
 
     public Direction getDirection() { return direction; }

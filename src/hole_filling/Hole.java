@@ -13,7 +13,7 @@ public class Hole {
 
     /**
      *
-     * @param cType
+     * @param cType - connected type which should be 4 or 8
      */
     public Hole(int cType){
         this.connectedType = cType;

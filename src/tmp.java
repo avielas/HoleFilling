@@ -59,7 +59,7 @@ public class tmp {
 //        OpenCVBasicExample();
 
 //        String path = "C:\\Users\\aviel\\Downloads\\Hole_Filling\\";
-//        String imageName = "Lenna.png";
+//        String imageName = "test1.png";
 //        convertRgbToGrey(path, imageName);
 //        hole_filling.Pixel[][] pixels = null;
 
@@ -116,7 +116,7 @@ public class tmp {
 //            List<Pixel> points = SquareTracing.getBoundary(mat);
 
             System.out.println();
-            //            String maskName = "Mask.png";
+            //            String maskName = "test1Mask.png";
 //            File input = new File(path + maskName);
 //            BufferedImage buffer = ImageIO.read(input);
 //            pixels = new hole_filling.Pixel[buffer.getHeight()][buffer.getWidth()];
