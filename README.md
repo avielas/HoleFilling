@@ -27,6 +27,8 @@ This library fills a hole in an image by doing the following steps:
 
 # How to use the library?
 
+* Add the following JAR file to your project:
+  * HoleFilling\out\artifacts\HoleFilling_jar\HoleFilling.jar
 * See HoleFilling.java for example. Also, you can read the library's documentation 
 
 # Tests images
