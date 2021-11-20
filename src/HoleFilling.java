@@ -3,7 +3,7 @@ import hole_filling.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class Main {
+public class HoleFilling {
 
     public static void main(String[] args) {
         try {

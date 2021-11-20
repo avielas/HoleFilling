@@ -45,36 +45,30 @@ public class SquareTracing {
         return null;
     }
 
-    public static void faceRight(DirectedPixel pixel) {
-        pixel.setDirection(pixel.getDirection().rotateRight());
-    }
-
-    private static void faceLeft(DirectedPixel pixel) {
-        pixel.setDirection(pixel.getDirection().rotateLeft());
-    }
-
     private static void stepForward(DirectedPixel pixel) {
-        if (pixel.getDirection() == Direction.NORTH) {
+        if (pixel.getDirection() == Direction.UP) {
             pixel.setY(pixel.getY()-1);
         }
-        else if (pixel.getDirection() == Direction.EAST) {
+        else if (pixel.getDirection() == Direction.RIGHT) {
             pixel.setX(pixel.getX()+1);
         }
-        else if (pixel.getDirection() == Direction.SOUTH) {
+        else if (pixel.getDirection() == Direction.DOWN) {
             pixel.setY(pixel.getY()+1);
         }
-        else if (pixel.getDirection() == Direction.WEST) {
+        else if (pixel.getDirection() == Direction.LEFT) {
             pixel.setX(pixel.getX()-1);
         }
     }
 
     public static void goLeft(DirectedPixel pixel) {
-        faceLeft(pixel);
+        // rotate face to left and move step forward
+        pixel.rotateLeft();
         stepForward(pixel);
     }
 
     public static void goRight(DirectedPixel pixel) {
-        faceRight(pixel);
+        // rotate face to right and move step forward
+        pixel.rotateRight();
         stepForward(pixel);
     }
 }

@@ -4,6 +4,16 @@ public class DirectedPixel extends Pixel {
 
     private Direction direction;
 
+    public DirectedPixel(int x, int y, float val) {
+        super(y, x, val);
+        this.direction = Direction.UP;
+    }
+
+    public DirectedPixel(DirectedPixel refPoint) {
+        super(refPoint.y, refPoint.x, refPoint.val);
+        this.direction = refPoint.direction;
+    }
+
     public Direction getDirection() { return direction; }
 
     public void setDirection(Direction direction) { this.direction = direction; }
@@ -16,14 +26,12 @@ public class DirectedPixel extends Pixel {
 
     public void setY(int y) { this.y = y; }
 
-    public DirectedPixel(int x, int y, float val) {
-        super(y, x, val);
-        this.direction = Direction.NORTH;
+    public void rotateRight(){
+        direction = direction.rotateRight();
     }
 
-    public DirectedPixel(DirectedPixel refPoint) {
-        super(refPoint.y, refPoint.x, refPoint.val);
-        this.direction = refPoint.direction;
+    public void rotateLeft(){
+        direction = direction.rotateLeft();
     }
 
     @Override

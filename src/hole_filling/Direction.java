@@ -1,7 +1,7 @@
 package hole_filling;
 
 public enum Direction {
-    NORTH(0), EAST(1), SOUTH(2), WEST(3);
+    UP(0), RIGHT(1), DOWN(2), LEFT(3);
     private int value;
 
     Direction(int v){ value = v; }
@@ -18,13 +18,13 @@ public enum Direction {
     public Direction getDirectionByValue(int v){
         switch (v) {
             case 0:
-                return Direction.NORTH;
+                return Direction.UP;
             case 1:
-                return Direction.EAST;
+                return Direction.RIGHT;
             case 2:
-                return Direction.SOUTH;
+                return Direction.DOWN;
             case 3:
-                return Direction.WEST;
+                return Direction.LEFT;
             default:
                 return null;
         }
