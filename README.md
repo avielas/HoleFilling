@@ -1,4 +1,9 @@
 
+# Project environment
+
+* I used Java 17 (openjdk-17.0.1) to build and run the project at Windows 11 machine
+
+
 # Hole Filling Library
 
 This library fills a hole in an image by doing the following steps:
@@ -15,7 +20,7 @@ This library fills a hole in an image by doing the following steps:
 * Command line utility location is HoleFilling\out\production\HoleFilling
 * Firstly run: 
   * java HoleFilling -h 
-* More usful examples:
+* More useful examples:
   * java HoleFilling C:\path_to_dir\Lenna.png C:\path_to_dir\Mask.png 3 0.01 8 true
   * java HoleFilling C:\path_to_dir\Lenna.png C:\path_to_dir\Mask.png 3 0.01 8 false
 
