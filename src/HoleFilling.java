@@ -3,6 +3,7 @@ import hole_filling.exceptions.*;
 import hole_filling.interfaces.*;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class HoleFilling {
@@ -34,10 +35,9 @@ public class HoleFilling {
             /*** Example of how to use HoleFilling library ***/
             IRgbToGrayscaleFunc rgb2GrayFunc = (Color c) -> (float) (((c.getRed() + c.getGreen() + c.getBlue())/3.0)/255);
             IWeightFunc weightFunc = (Pixel u, Pixel v) -> (float) (1 / (Math.pow(MathCalculator.euclideanDistance(u, v), z) + e));
-
             HoledImage holedImage = new HoledImage(imagePath, maskPath, cType, rgb2GrayFunc);
             HoleFillingLib.fillHole(holedImage, weightFunc, isOptimized);
-            holedImage.save();
+            IOImage.save(holedImage.getImagePath(), holedImage.getGrayscalePixels());
             /************** End of the example ***************/
         }
         catch (ArrayIndexOutOfBoundsException | IOException | FailedToExtractFileFormatException | ImagesAreWithDifferentSizeException | NumberFormatException e) {

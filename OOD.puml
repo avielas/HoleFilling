@@ -9,9 +9,7 @@ class Image{
     + String getImagePath()
     + BufferedImage getImageBuffer()
     + Pixel[][] getGrayscalePixels()
-    - void loadImageToBuffer()
     + void bufferedImageToGrayscalePixels(IRgbToGrayscaleFunc rgbToGrayscaleFunc)
-    + void save()
 }
 
 class HoledImage extends Image{
@@ -100,6 +98,11 @@ interface IRgbToGrayscaleFunc{
 
 class MathCalculator{
     + {static} float euclideanDistance(Pixel p1, Pixel p2)
+}
+
+class IOImage{
+    + {static} BufferedImage loadImageToBuffer(String imagePath)
+    + {static} void save(String imagePath, Pixel[][] grayscalePixels)
 }
 
 class Consts{

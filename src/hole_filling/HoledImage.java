@@ -24,7 +24,7 @@ public class HoledImage extends Image{
      * @param cType - connected-type (4 or 8) for ing the hole's boundary
      * @param rgb2GrayFunc - a function that defines the RGB2GRAY conversion for each pixel
      */
-    public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc) throws ImagesAreWithDifferentSizeException {
+    public HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc) throws ImagesAreWithDifferentSizeException, IOException {
         super(imagePath);
         this.rgb2GrayFunc = rgb2GrayFunc;
         hole = new Hole(cType);
@@ -46,7 +46,7 @@ public class HoledImage extends Image{
      * Implements the logic of carve out a hole in an image according the given mask, rgbToGrayscaleFunc and
      * given intensity value on 0.5
      */
-    private void carveOutTheHole(){
+    private void carveOutTheHole() throws IOException, ImagesAreWithDifferentSizeException {
         try {
             BufferedImage maskBuffer = ImageIO.read(new File(maskPath));
             int width = maskBuffer.getWidth();
@@ -72,8 +72,7 @@ public class HoledImage extends Image{
                 }
             }
         } catch (IOException | ImagesAreWithDifferentSizeException e) {
-            System.out.println(e.fillInStackTrace());
-            System.exit(1);
+            throw e;
         }
     }
 
