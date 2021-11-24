@@ -4,7 +4,7 @@
 class Image{
     # BufferedImage imageBuffer
     # Pixel[][] greyscalePixels
-    # String imagePath
+    # final String imagePath
     + Image(String imagePath)
     + String getImagePath()
     + BufferedImage getImageBuffer()
@@ -13,9 +13,9 @@ class Image{
 }
 
 class HoledImage extends Image{
-    - String maskPath
-    - IRgbToGrayscaleFunc rgb2GrayFunc
-    - Hole hole
+    - final String maskPath
+    - final IRgbToGrayscaleFunc rgb2GrayFunc
+    - final Hole hole
     + HoledImage(String imagePath, String maskPath, int cType, IRgbToGrayscaleFunc rgb2GrayFunc)
     + Hole getHole()
     - void carveOutTheHole()
@@ -24,9 +24,9 @@ class HoledImage extends Image{
 }
 
 class Hole{
-    - Set<Pixel> pixels
-    - Set<Pixel> boundary
-    - int connectedType
+    - final Set<Pixel> pixels
+    - final Set<Pixel> boundary
+    - int final connectedType
     + Hole(int cType)
     + Set<Pixel> getPixels()
     + Set<Pixel> getBoundary()
@@ -47,6 +47,8 @@ class Pixel{
     + int getX()
     + float getVal()
     + void setVal(float val)
+    + int hashCode()
+    + boolean equals(Object obj)
 }
 
 class DirectedPixel extends Pixel{
@@ -67,7 +69,7 @@ enum Direction{
     + 2 DOWN : int
     + 3 LEFT : int
     - Direction(int v)
-    - int value
+    - final int value
     + Direction getDirectionByValue(int v)
     + Direction rotateRight()
     + Direction rotateLeft()
