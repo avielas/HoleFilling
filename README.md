@@ -11,7 +11,7 @@ This library fills a hole in an image by doing the following steps:
 * Convert an RGB pixel from [0-255] to [0.0-1.0] range
 * Assign -1 value to every pixel which defined as hole in the mask and intensity value (0.5)
 * Finds the boundary of the hole (4/8 connected-type)
-* Applies the given formula to every pixel in the hole
+* Applies the given formula to every pixel in the hole. Optonal - 'true' to run Boundary Tracing Algorithm to achive O(n) optimization
 * Save the filled image in source image directory
 
 
