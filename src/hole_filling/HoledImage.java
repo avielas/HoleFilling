@@ -38,7 +38,7 @@ public class HoledImage extends Image{
      *
      * @return Hole class
      */
-    public Hole getHole() {
+    public synchronized Hole getHole() {
         return hole;
     }
 
@@ -46,7 +46,7 @@ public class HoledImage extends Image{
      * Implements the logic of carve out a hole in an image according the given mask, rgbToGrayscaleFunc and
      * given intensity value on 0.5
      */
-    private void carveOutTheHole() throws IOException, ImagesAreWithDifferentSizeException {
+    private synchronized void carveOutTheHole() throws IOException, ImagesAreWithDifferentSizeException {
         try {
             BufferedImage maskBuffer = ImageIO.read(new File(maskPath));
             int width = maskBuffer.getWidth();
@@ -79,7 +79,7 @@ public class HoledImage extends Image{
     /***
      * Finds a hole inside an image assuming -1 is the hole pixel value
      */
-    private void findHole(){
+    private synchronized void findHole(){
         for (int i = 0; i < grayscalePixels.length; i++) {
             for (int j = 0; j < grayscalePixels[0].length; j++) {
                 if (grayscalePixels[i][j].getVal() == -1) {
@@ -92,7 +92,7 @@ public class HoledImage extends Image{
     /**
      * Find the boundary of the hole by connected-type (4/8)
      */
-    private void findBoundary(){
+    private synchronized void findBoundary(){
         for (Pixel p : hole.getPixels()) {
             int x = p.getX();
             int y = p.getY();
