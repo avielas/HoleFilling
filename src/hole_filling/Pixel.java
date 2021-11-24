@@ -31,4 +31,28 @@ public class Pixel {
     public float getVal() {
         return val;
     }
+
+    /***
+     * To enable use of contains() when checking if Pixel object is inside a set
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return this.y * 10000 + this.x;
+    }
+
+    /***
+     * I DEFINED THIS TO COMPARE JUST BY X & Y WITHOUT VALUE TO ENABLE COMPARING DirectedPixel to Pixel
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Pixel p = (Pixel) obj;
+        return this.x == p.x && this.y == p.y;
+    }
 }

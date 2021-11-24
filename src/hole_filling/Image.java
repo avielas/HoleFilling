@@ -1,22 +1,17 @@
 package hole_filling;
 
-import hole_filling.exceptions.FailedToExtractFileFormatException;
 import hole_filling.interfaces.IRgbToGrayscaleFunc;
 
-import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /***
  * This class represents an RGB image. Also, it loads the image to buffer when initialized.
  * Ths class also contains the functionality of converting RGB image to GRAYSCALE
  */
 public class Image {
-    protected String imagePath;
+    protected final String imagePath;
     protected BufferedImage imageBuffer;
     protected Pixel[][] grayscalePixels;
 

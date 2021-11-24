@@ -113,9 +113,13 @@ public class tmp {
             findHole(mat, H, mat.length, mat[0].length);
             findBoundary(mat, H, B);
 
+            if(B.contains(new Pixel(2,3,0.5f)))
+                System.out.println();
+            else
+                System.out.println();
 //            List<Pixel> points = SquareTracing.getBoundary(mat);
 
-            System.out.println();
+
             //            String maskName = "test1Mask.png";
 //            File input = new File(path + maskName);
 //            BufferedImage buffer = ImageIO.read(input);

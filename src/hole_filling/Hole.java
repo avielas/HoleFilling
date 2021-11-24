@@ -7,9 +7,9 @@ import java.util.Set;
  * This class represents a hole inside an image. Each hole described by pixels, boundary, and connected type
  */
 public class Hole {
-    private Set<Pixel> pixels;
-    private Set<Pixel> boundary;
-    private int connectedType;
+    private final Set<Pixel> pixels;
+    private final Set<Pixel> boundary;
+    private final int connectedType;
 
     /**
      *

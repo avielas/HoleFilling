@@ -19,20 +19,16 @@ public class SquareTracing {
 
         List<Pixel> pixels = new ArrayList<>();
         //cache - to prevent adding pixels which already visited
-        Set<String> cache = new HashSet<>();
-        //boundaryByKeys - for checking if DirectedPixel is on the boundary (isBoundary() function
-        //works just with Pixel)
-        Set<String> boundaryByKeys = createBoundaryByKeys(srcImage.getHole().getBoundary());
+        Set<Pixel> cache = new HashSet<>();
 
         DirectedPixel startPixel = getStartingPixel(srcImage);
         DirectedPixel currPixel = new DirectedPixel(startPixel);
 
         do {
-            String currPixelKey = currPixel.getY() + "$" + currPixel.getX();
-            if (currPixel.getVal() == -1f || boundaryByKeys.contains(currPixelKey)){
-                if(!cache.contains(currPixelKey)) {
+            if (currPixel.getVal() == -1f || srcImage.getHole().getBoundary().contains(new Pixel(currPixel.getY(), currPixel.getX(), currPixel.val))){
+                if(!cache.contains(new Pixel(currPixel.getY(), currPixel.getX(), currPixel.val))) {
                     pixels.add(image[currPixel.getY()][currPixel.getX()]);
-                    cache.add(currPixelKey);
+                    cache.add(new Pixel(currPixel.getY(), currPixel.getX(), currPixel.val));
                 }
                 goLeft(currPixel);
             } else {
@@ -41,13 +37,6 @@ public class SquareTracing {
         } while (!startPixel.equals(currPixel));
 
         return pixels;
-    }
-
-    private static Set<String> createBoundaryByKeys(Set<Pixel> boundary) {
-        Set<String> boundaryByKeys = new HashSet<>();
-        for(Pixel p : boundary)
-            boundaryByKeys.add(p.getY() + "$" + p.getX());
-        return boundaryByKeys;
     }
 
     /**

@@ -34,22 +34,8 @@ public class DirectedPixel extends Pixel {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
         final DirectedPixel other = (DirectedPixel) obj;
-        if (this.x != other.x) {
-            return false;
-        }
-        if (this.y != other.y) {
-            return false;
-        }
-        if (this.direction != other.direction) {
-            return false;
-        }
-        return true;
+
+        return super.equals(other) && this.direction == other.direction;
     }
 }

@@ -13,9 +13,9 @@ import java.io.IOException;
  * This class represents an image with a hole (extends from Image). Also, it implements the functionality that's needed to carve out a hole in an image
  */
 public class HoledImage extends Image{
-    private Hole hole;
-    private IRgbToGrayscaleFunc rgb2GrayFunc;
-    private String maskPath;
+    private final Hole hole;
+    private final IRgbToGrayscaleFunc rgb2GrayFunc;
+    private final String maskPath;
 
     /**
      *
